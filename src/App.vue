@@ -17,16 +17,13 @@ func()
 
 <template>
 
-  <h1 id="chrome">chrome: </h1>
+  <!-- <h1 id="chrome">chrome: </h1> -->
 
   <p>
-    <strong>Current route path:</strong> {{ $route.fullPath }}
+    <!-- <strong>Current route path:</strong> {{ $route.fullPath }} -->
+    App component
   </p>
 
-  <nav>
-    <RouterLink to="/">Go to Home</RouterLink>
-    <RouterLink to="/about">Go to About</RouterLink>
-  </nav>
   <main>
     <RouterView />
   </main>
