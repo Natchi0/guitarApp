@@ -2,9 +2,9 @@
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  const chrome = document.getElementById('chrome');
+  // const chrome = document.getElementById('chrome');
 
-  chrome.innerText += " " + versions.chrome()
+  // chrome.innerText += " " + versions.chrome()
 });
 
 const func = async () => {
@@ -16,20 +16,26 @@ func()
 </script>
 
 <template>
+  
+  <body>
 
-  <!-- <h1 id="chrome">chrome: </h1> -->
-
-  <p>
-    <!-- <strong>Current route path:</strong> {{ $route.fullPath }} -->
-    App component
-  </p>
-
-  <main>
-    <RouterView />
-  </main>
-
+    <!-- <h1 id="chrome">chrome: </h1> -->
+    
+    <!-- <p>
+      <strong>Current route path:</strong> {{ $route.fullPath }}
+      App component
+    </p> -->
+    
+    <main class="h-full">
+      <RouterView />
+    </main>
+  </body>
+    
 </template>
   
 <style scoped>
-  
+  body{
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
 </style>
