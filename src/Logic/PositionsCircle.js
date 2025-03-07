@@ -5,11 +5,11 @@ function polarToCartesian(theta, radius){
     };
 }
 
-const innerRadius = 0.66; //radio del circulo entre mayores y menores
-const threshold = 0.1; //umbral para saber si un acorde es mayor o menor
 
 export function getPositionsCircle(notes) {
-
+    
+    const innerRadius = 0.66; //radio del circulo entre mayores y menores
+    const threshold = 0.01; //umbral para saber si un acorde es mayor o menor
     const majorOrder = [];
     const minorOrder = [];
     const majorCoords = [];
@@ -20,7 +20,7 @@ export function getPositionsCircle(notes) {
         minorOrder.push( notes[(i * 7 + 9) % 12]);
     }
 
-    let archSize = Math.PI *2 / majorOrder.length; //circunferencia del circulo dividida entre la cantidad de acordes
+    let archSize = Math.PI * 2 / majorOrder.length; //circunferencia del circulo dividida entre la cantidad de acordes
     let startAngle =  0 - archSize / 2 - Math.PI / 2; //angulo inicial del primer acorde
 
     //CALULAR PRIMERO LOS MAYORES

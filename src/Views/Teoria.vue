@@ -16,9 +16,7 @@ const notes = computed(() => verComoSostenido.value ? notesSharp.value : notesFl
 <template>
 
     <div class="bg-emerald-100 h-full">
-        <div class="h-60 w-60 mx-auto">
-            <CirculoDeQuintas :notes="notes" :ver-como-sostenido="verComoSostenido"></CirculoDeQuintas>
-        </div>
+        <CirculoDeQuintas :notes="notes" :ver-como-sostenido="verComoSostenido"></CirculoDeQuintas>
     </div>
     
 </template>
