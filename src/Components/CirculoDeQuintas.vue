@@ -56,62 +56,47 @@ onMounted(() => {
     center = canvas.value.width;
     innerRadius = 0.66 * radius;
 
-    resize();
-    size();
+    handleResize();
 
     //event listener en caso de hacer resize de la ventana
-    window.addEventListener('resize', () => {
-        resize();
-        size();
-    });
+    window.addEventListener('resize', handleResize);
 })
 
-const size = () => {
+function handleResize() {
     const margin = 15;
-    let dim = Math.min(chordContainer.value.offsetWidth, chordContainer.value.offsetHeight);
-    console.log(chordContainer.value)
-    dim -= margin * 2;
+    // tamaño disponible para el círculo
+    let dim = Math.min(chordContainer.value.offsetWidth, chordContainer.value.offsetHeight) - margin * 2;
 
-    wheelContainer.value.style.width = `${dim}px`;
-    wheelContainer.value.style.height = `${dim}px`;
-    wheelContainer.value.style.marginLeft = `${-dim / 2}px`;
-    wheelContainer.value.style.marginTop = `${-dim / 2}px`;
+    // ajustar el tamaño visual del canvas
+    canvas.value.style.width = `${dim}px`;
+    canvas.value.style.height = `${dim}px`;
 
-    canvas.value.width = dim*2;
-    canvas.value.height = dim*2;
-    console.log(dim)
+    //tamaño interno (lógico) del canvas
+    canvas.value.width = dim;
+    canvas.value.height = dim;
+
+    // El radio y el centro se basan en `dim` (el tamaño "visual")
     radius = dim / 2;
-    center = radius;
+    center = radius; // si lo quieres usar después
     innerRadius = 0.66 * radius;
 
     draw(currentLetter, currentKey);
 }
-
-const resize = () => {
-    radius = Math.min(canvas.value.width, canvas.value.height);
-    center = radius;
-    ctx.canvas.width = canvas.value.width * 2;
-    ctx.canvas.height = canvas.value.height * 2;
-    innerRadius = 0.66 * radius;
-
-    draw(currentLetter, currentKey);
-}
-
 
 const draw = (letter, key) => {
-
     currentLetter = letter;
     currentKey = key;
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
+    // El centro en coordenadas "visuales"
+    const centerX = radius; 
+    const centerY = radius;
 
     let major = (key === "major") // true si la key es major, false si es minor
-    
-    let centerX = canvas.value.width / 2;
-    let centerY = canvas.value.height / 2;
 
     //dibujar las mayores
     for(let majChordLetter in positions.value.major) {
-        let majChord = positions.value.major[majChordLetter];
+        const majChord = positions.value.major[majChordLetter];
+
         if (majChordLetter == letter && major){
             ctx.fillStyle = "black";
         } else {
@@ -126,7 +111,8 @@ const draw = (letter, key) => {
 
     //dibujar las menores
     for(let minChordLetter in positions.value.minor) {
-        let minChord = positions.value.minor[minChordLetter];
+        const minChord = positions.value.minor[minChordLetter];
+
         if (minChordLetter == letter && !major){
             ctx.fillStyle = "black";
         } else {
@@ -149,7 +135,7 @@ watch(() => props.notes, (newNotes) => {
 </script>
 
 <template>
-    <div id="Chord" ref="chordContainer">
+    <div id="Chord" ref="chordContainer" class="bg-blue-200">
         <div id="Wheel" ref="wheelContainer" class="bg-red-100">
             <canvas ref="canvas" id="circulo" class="bg-amber-300"></canvas>
 
@@ -158,5 +144,19 @@ watch(() => props.notes, (newNotes) => {
 </template>
 
 <style scoped>
-
+#Chord {
+    /* Que ocupe toda la ventana, por ejemplo */
+    width: 50vw;
+    height: 50vw;
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 500px;
+    max-height: 500px;
+    /* o un alto fijo: height: 600px; */
+    
+    /* Para centrar el canvas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 </style>
