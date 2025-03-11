@@ -1,4 +1,5 @@
 <script setup>
+//usando como guia el componente 'arpeggios': https://github.com/googlecreativelab/chrome-music-lab
 import { defineProps, onMounted, useTemplateRef, ref, watch } from 'vue'
 import { getPositionsCircle } from '../Logic/PositionsCircle';
 
@@ -107,6 +108,15 @@ const draw = (letter, key) => {
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius * majChord.outerRadius, majChord.startAngle, majChord.endAngle, false);
         ctx.fill();
+
+        // Dibujar la letra de la nota
+        const textX = centerX + (radius * majChord.outerRadius * 0.80) * Math.cos((majChord.startAngle + majChord.endAngle) / 2);
+        const textY = centerY + (radius * majChord.outerRadius * 0.80) * Math.sin((majChord.startAngle + majChord.endAngle) / 2);
+        ctx.fillStyle = "white";
+        ctx.font = "16px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(majChordLetter, textX, textY);
     }
 
     //dibujar las menores
@@ -123,6 +133,15 @@ const draw = (letter, key) => {
         ctx.moveTo(centerX, centerY);
         ctx.arc(centerX, centerY, radius * minChord.outerRadius, minChord.startAngle, minChord.endAngle, false);
         ctx.fill();
+
+        // Dibujar la letra de la nota
+        const textX = centerX + (radius * minChord.outerRadius * 0.80) * Math.cos((minChord.startAngle + minChord.endAngle) / 2);
+        const textY = centerY + (radius * minChord.outerRadius * 0.80) * Math.sin((minChord.startAngle + minChord.endAngle) / 2);
+        ctx.fillStyle = "white";
+        ctx.font = "16px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(minChordLetter, textX, textY);
     }
 }
 
