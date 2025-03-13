@@ -32,14 +32,13 @@ function polarToCartesian(x, y, r, degrees) {
     <svg class="container m-auto" width="800" height="800" viewBox="0 0 400 400">
 
         <g class="orientacion">
-            <template v-for="(v, i) in data">
-                <PiezaCirculo :x="200" :y="200" :r0="180" :r1="120" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="v"></PiezaCirculo>
-                <PiezaCirculo :x="200" :y="200" :r0="120" :r1="80" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="tinycolor(v).darken(10).toString()"></PiezaCirculo>
-                <PiezaCirculo :x="200" :y="200" :r0="80" :r1="50" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="tinycolor(v).darken(20).toString()"></PiezaCirculo>
+            <template v-for="(v, i) in CircleData">
+                <PiezaCirculo :x="200" :y="200" :r0="180" :r1="120" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="v.color" :nota="v.keySignature"></PiezaCirculo>
+                <PiezaCirculo :x="200" :y="200" :r0="120" :r1="80" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="tinycolor(v.color).darken(10).toString()" :nota="v.relativeMinor"></PiezaCirculo>
+                <PiezaCirculo :x="200" :y="200" :r0="80" :r1="50" :d0="(i + 1) * 30" :d1="((i + 2) * 30) + 1" :color="tinycolor(v.color).darken(20).toString()" :nota="v.diminished"></PiezaCirculo>
             </template>
         </g>
 
-        
         <g>
             <template v-for="(v, i) in CircleData">
                 <text class="textNota"
@@ -47,13 +46,13 @@ function polarToCartesian(x, y, r, degrees) {
                     :y="polarToCartesian(200, 200, 150, (i * 30) - 90)[1]"
                     :transform="'rotate(' + ((i * 30) - 90) + ' ' + polarToCartesian(200, 200, 150, (i * 30) - 90)[0] + ' ' + polarToCartesian(200, 200, 150, (i * 30) - 90)[1] + ') rotate(' + (-(i * 30) + 90) + ' ' + polarToCartesian(200, 200, 150, (i * 30) - 90)[0] + ' ' + polarToCartesian(200, 200, 150, (i * 30) - 90)[1] + ')'"
                 >{{ v.note }}</text>
-
+        
                 <text class="textNota"
                     :x="polarToCartesian(200, 200, 100, (i * 30) - 90)[0]"
                     :y="polarToCartesian(200, 200, 100, (i * 30) - 90)[1]"
                     :transform="'rotate(' + ((i * 30) - 90) + ' ' + polarToCartesian(200, 200, 100, (i * 30) - 90)[0] + ' ' + polarToCartesian(200, 200, 100, (i * 30) - 90)[1] + ') rotate(' + (-(i * 30) + 90) + ' ' + polarToCartesian(200, 200, 100, (i * 30) - 90)[0] + ' ' + polarToCartesian(200, 200, 100, (i * 30) - 90)[1] + ')'"
                 >{{ v.relativeMinor }}</text>
-
+        
                 <text class="textNota"
                     :x="polarToCartesian(200, 200, 65, (i * 30) - 90)[0]"
                     :y="polarToCartesian(200, 200, 65, (i * 30) - 90)[1]"
@@ -61,7 +60,7 @@ function polarToCartesian(x, y, r, degrees) {
                 >{{ v.diminished }}</text>
             </template>
         </g>
-    
+        
     </svg>
 </template>
 
@@ -71,6 +70,7 @@ function polarToCartesian(x, y, r, degrees) {
     dominant-baseline: central;
     font-size: 12px;
     fill: white;
+    pointer-events: none;
 }
 
 .orientacion {

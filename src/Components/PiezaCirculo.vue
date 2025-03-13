@@ -1,5 +1,6 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
+import { useCircle } from '../Composables/useCircle';
 /**
  * este componente es basicamente esto
  * 
@@ -20,8 +21,18 @@ const props = defineProps({
     r1: Number,
     d0: Number,
     d1: Number,
-    color: String
+    color: String,
+    nota: String
 })
+
+const {selectedKey, selectKey} = useCircle()
+
+const selected = ref(false)
+
+function seleccionarNota(){
+  selectKey(props.nota)
+  selected.value = !selected.value
+}
 
 function polarToCartesian(x, y, r, degrees) {
   const radians = degrees * Math.PI / 180.0;
@@ -42,9 +53,17 @@ function segmentPath(x, y, r0, r1, d0, d1) {
     'Z',
   ].join('')
 }
-console.log(props.color)
+
 </script>
 
 <template>
-    <path stroke="black" :fill="props.color ? props.color : 'white'" :d="segmentPath(props.x, props.y, props.r0, props.r1, props.d0, props.d1)"></path>
+  <path class="wedge hover:fill-slate-700" :class="{'fill-black': selected}" stroke="black" :fill="props.color ? props.color : 'white'" :d="segmentPath(props.x, props.y, props.r0, props.r1, props.d0, props.d1)" @click="seleccionarNota"></path>
 </template>
+
+<style scoped>
+.wedge {
+  transition: fill 0.2s;
+}
+
+
+</style>

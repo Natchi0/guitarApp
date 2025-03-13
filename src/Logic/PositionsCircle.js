@@ -1,3 +1,5 @@
+//DEPRECATED
+
 function polarToCartesian(theta, radius){
     return {
         x : radius * Math.cos(theta),
